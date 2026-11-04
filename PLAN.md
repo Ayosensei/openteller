@@ -15,11 +15,11 @@ As of 4 November 2026. NEAR Hackathon deadline: **14 November 2026, 23:59 UTC**.
 
 ## Phase 1 — repo and design shell (4–5 November)
 
-- [ ] Scaffold Next.js TypeScript/Tailwind (or inspect existing scaffold).
-- [ ] `npm install motion && npx motion-ai`; `npm install react-aria-components`.
-- [ ] Implement fonts, global CSS variables, Tailwind mapping, responsive shell, custom SVG icons and React Aria base wrappers.
-- [ ] Implement reduced-motion and one-time below-the-fold landing scroll reveals without costly animation loops.
-- [ ] Create domain models, migrations, repository layer, environment validation and test runner.
+- [x] Scaffold Next.js TypeScript/Tailwind (or inspect existing scaffold).
+- [x] `npm install motion && npx motion-ai`; `npm install react-aria-components`.
+- [x] Implement fonts, global CSS variables, Tailwind mapping, responsive shell, custom SVG icons and React Aria base wrappers.
+- [x] Implement reduced-motion and one-time below-the-fold landing scroll reveals without costly animation loops.
+- [x] Create domain models, migrations, repository layer, environment validation and test runner.
 
 **Acceptance:** `npm run build`, lint and typecheck pass; design at 390/768/1024/1440 has no overflow; nothing needs live secrets to render fixtures.
 
