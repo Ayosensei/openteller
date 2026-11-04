@@ -25,18 +25,26 @@ Freelance designers, developers, writers and community managers working with cry
 
 ## Technology
 
-Next.js, TypeScript, Tailwind CSS, Motion, React Aria Components, NEAR Intents 1Click API and potentially a restricted NEAR meta-transaction relayer. Auth, database, deployment and any contract choice remain **OPEN** until explicitly selected.
+Next.js App Router, strict TypeScript, Tailwind CSS, Motion, React Aria Components, Neon Postgres with Drizzle migrations, Neon Managed Better Auth and the NEAR Intents 1Click API. Vercel Hobby is approved only for the non-commercial hackathon demo. Any contract or funded relayer remains **OPEN**.
 
-## Quick start (after the app scaffold is committed)
+## Quick start
 
 ```bash
 npm install
 cp .env.example .env.local
-# Fill only the environment variables necessary for the chosen local mode.
 npm run dev
 ```
 
-See `.env.example` for placeholders. Never paste private keys into source files or `.env.example`. If the app isn't scaffolded yet, Codex follows `AGENTS.md` and `PLAN.md` to create it. These commands are the intended eventual workflow, not evidence that they already run.
+Fill the server variables listed in `.env.example`; never paste credentials into source files or the template. The current home page is an implementation baseline and does not make live payment claims.
+
+Validation commands:
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
 
 ## Intended payment workflow
 
@@ -59,7 +67,7 @@ Invoices are denominated in USDC. The payment CSV is one row per actual payment 
 - Supported tokens/routes depend on the live 1Click response.
 - Fee quotes, refund behavior, precise status fields and transaction links require integration verification; see `INTEGRATIONS.md`.
 - A NEAR relayer, if built, sponsors **specific NEAR actions only**, not any source-chain token transfer fee.
-- Freelancer auth, persistent storage and secure hosted deployment must be finished before real multi-user use.
+- The approved auth and database architecture still must be implemented and deployed before real multi-user use.
 
 ## Read the project docs
 

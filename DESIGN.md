@@ -68,7 +68,7 @@ Real destinations only. Do not add pages, nav items, settings screens, notificat
 | Screen | Route | Who sees it | Spec |
 |---|---|---|---|
 | Landing (F1) | `/` | Anyone | 10.1 |
-| Sign in | not designed | Freelancer | OPEN (section 20) |
+| Sign in | `/sign-in` | Freelancer | 10.9 |
 | Invoice list | `/invoices` | Freelancer | 10.2 |
 | Create invoice | `/invoices/new` | Freelancer | 10.3 |
 | Invoice detail (F6) | `/invoices/[id]` | Freelancer | 10.4 |
@@ -538,7 +538,7 @@ Minimum touch target 44px by 44px on mobile and desktop. Where a visual element 
 ### 9.2 Top bar (freelancer pages)
 - Desktop: 72px tall, `--paper`, 1px `--line` bottom border, sticky at `top: 0`, z-index 20. Content width and padding follow section 5.1.
 - Left: wordmark. Next to it with 48px gap: nav items **Invoices** and **Exports** only. Nav is `mono-m` uppercase, +0.1em tracking, `--ink-2`. Active item: `--ink` with a 2px `--ember` underline that sits flush on the bar's bottom border (the underline overlaps the border, 6px below the text baseline box). Hover: `--ink`. The current page is marked `aria-current="page"`.
-- Right: the NEAR account in a **non-interactive** mono-s chip on `--sunken`, `--r-sm`, 8px by 12px padding, full account ID, middle-truncated only below 640px. No avatar, no status dot, no notification icon, no dropdown. (The Stitch screen added a black avatar button and `Ledger` and `Settings`: remove them.) Sign-out placement is OPEN (section 20).
+- Right: the signed-in identity in a **non-interactive** mono-s chip on `--sunken`, `--r-sm`, 8px by 12px padding, using the provider email or display name and middle-truncating only below 640px. A separate ghost text button `SIGN OUT` follows it with a 12px gap and ends the Neon session. No avatar, status dot, notification icon or dropdown. A receiving NEAR account belongs to invoice/payment data and is not presented as the authenticated identity. (The Stitch screen added a black avatar button and `Ledger` and `Settings`: remove them.)
 - Mobile (below 640px): two rows. Row 1, 56px: wordmark left, account chip right. Row 2, 44px: the two nav items, left aligned, 24px apart, with the same underline style. Both rows share the sticky bar. No hamburger menu.
 - Bottom border of the bar appears at all times (no scroll-linked shadow).
 
@@ -829,8 +829,12 @@ Freelancer-only. Header: label `EXPORTS`, title `Export your records`, lead text
 
 No playful illustrations, emojis, invented system codes or auto-redirect timers. All errors have text not colour alone, keyboard-accessible actions and a truthful outcome.
 
-### 10.9 Sign-in — intentionally unresolved
-A sign-in destination exists in the product scope but neither route nor authentication interaction is approved. `OPEN 3` in section 20 and `D01` in `DECISIONS.md` must be resolved before producing the screen. Once approved, its UI should reuse existing form, top bar, label and error components: do not invent a wallet-auth UX or claim a wallet is securely authenticated by simply connecting it. Do not let this unresolved screen block construction of unrelated static components with fixtures.
+### 10.9 Sign-in `/sign-in`
+**Purpose:** authenticate a freelancer through Neon Managed Better Auth. A connected wallet is not an identity session.
+
+Use a minimal landing-style top bar with the non-linked wordmark and no freelancer navigation. Main content is left-aligned in the standard 640px reading column: label `FREELANCER ACCESS`, display-m heading `Sign in to manage invoices.`, one ui-m explanation `Use Google or GitHub to continue.`, then two full-width secondary buttons in this order: `CONTINUE WITH GOOGLE`, `CONTINUE WITH GITHUB`. Provider marks are not introduced; use text only. Below the buttons, ui-s copy states that clients do not need an account to pay an invoice.
+
+Provider errors use the standard error banner with `We couldn't sign you in. Try again.` Preserve a validated same-origin return target so a successful sign-in can continue to the originally requested protected route; reject arbitrary callback URLs. While a provider redirect is starting, retain the button label, show the standard spinner and disable both provider buttons. If already signed in, redirect server-side to `/invoices`. Sign-out returns to `/` and clears the managed session. Do not add email/password fields, wallet-connect controls, account creation copy, terms checkboxes or additional providers without approval.
 
 ---
 
@@ -1080,7 +1084,7 @@ This section records remaining questions. **The v5 sections 10–20 are newly wr
 |---|---|---|---|
 | OPEN 1 | VERIFY | Is Bricolage Grotesque numerically tabular at hero sizes? (4.2) | Use `HeroAmount` abstraction; switch to Martian Mono if verified unsuitable. |
 | OPEN 2 | OPEN | Which lightweight QR encoder and its verified payload format? (9.11) | No QR until its payload matches a real copy field and dependency approved; retain copy button. |
-| OPEN 3 | OPEN | Authentication/session and exact sign-in route, sign-out placement (2, 9.2, 10.9; D01) | No invented wallet-only security UI; protected pages remain guarded. |
+| OPEN 3 | DECIDED 4 Nov 2026 | Neon Managed Better Auth with Google/GitHub at `/sign-in`; separate `SIGN OUT` ghost button after the identity chip (2, 9.2, 10.9; D01) | Verify provider configuration, callback validation, session clearing and protected-route authorization before real data. |
 | OPEN 4 | OPEN | Quantity precision, USDC display precision for fractional settlements, max invoice amounts (11; D06) | Block unsupported values rather than silently rounding/overflowing. |
 | OPEN 5 | OPEN / VERIFY | Refund address collection/validation, provider semantics, underpaid/refunded fields, whether separate status stamps should exist (9.12, 10.5; D05/D07) | Paid stamp only; plain status text for other outcomes. Block unsafe quote flow. |
 | OPEN 6 | VERIFY | Slab transaction hashes/received amounts and status timestamps actually exposed by 1Click or chain explorer (9.12–9.13; D04) | Use known values only, display unavailable evidence plainly. |

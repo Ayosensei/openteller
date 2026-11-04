@@ -20,8 +20,8 @@ Status: 4 November 2026. This document distinguishes founder-approved scope from
 
 | ID | Question | Suggested direction (not approved) | Owner | Status |
 | --- | --- | --- | --- | --- |
-| D01 | Freelancer sign-in and session | **Recommended for approval:** Neon Managed Better Auth with Google and GitHub sign-in, HTTP-only managed sessions, `/sign-in`, and a visible sign-out action beside the account identity | Builder | OPEN |
-| D02 | Durable DB and hosting | **Recommended for approval:** Neon Postgres free tier + Drizzle generated SQL migrations; Vercel Hobby for the noncommercial hackathon deployment, with a production plan decision before commercial use | Builder | OPEN |
+| D01 | Freelancer sign-in and session | Neon Managed Better Auth with Google and GitHub sign-in, HTTP-only managed sessions, `/sign-in`, and a visible sign-out action beside the account identity | Builder | DECIDED 4 Nov 2026 |
+| D02 | Durable DB and hosting | Neon Postgres free tier + Drizzle generated SQL migrations; Vercel Hobby for the noncommercial hackathon deployment, with a production plan decision before commercial use | Builder | DECIDED 4 Nov 2026 |
 | D03 | Replacement `DESIGN.md` sections 10–20 | Use the v5 replacements while preserving their `OPEN`/`VERIFY` gates | Builder | DECIDED 4 Nov 2026 |
 | D04 | Receiving asset/account structure | Live token list verifies the NEAR USDC asset and 6 decimals; verify recipient type, receiving-account requirements and exact destination semantics with a builder-controlled dry quote | Builder + agent | PARTIAL / VERIFY |
 | D05 | Refund address UX | Make payer provide network-valid, payer-controlled refund address | Builder + agent | OPEN |
@@ -43,6 +43,24 @@ The organizer's `HACKATHON.md` says unauthenticated 1Click swaps cost 0.2%, whil
 - Evidence/source: `DESIGN.md` v5 status and section 20; builder instruction in the project session.
 - Documents changed: `AGENTS.md`, `SPEC.md`, `PLAN.md`, `START-HERE.md`, `DECISIONS.md`.
 - Implementation acceptance test: Each implemented screen follows its v5 screen specification while unresolved items remain gated by their `OPEN` or `VERIFY` marker.
+
+### D01 — Freelancer authentication and session
+- Date: 4 November 2026
+- Owner/approval: Builder
+- Final decision: Neon Managed Better Auth with Google and GitHub providers, `/sign-in`, managed HTTP-only sessions, and an explicit sign-out action. Wallet connection and NEAR receiving accounts are not authentication.
+- Alternatives considered: Custom NEAR signature sessions; self-hosted Better Auth; a separate hosted auth provider.
+- Evidence/source: Neon documents Managed Better Auth sessions and the `neon_auth` schema; builder approved the proposed architecture in the project session.
+- Documents changed: `SPEC.md`, `ARCHITECTURE.md`, `DESIGN.md`, `DECISIONS.md`, `.env.example`.
+- Implementation acceptance test: Anonymous users cannot read private routes; owner A cannot read or mutate owner B; public slugs expose only approved fields; sign-out invalidates the session; callback targets are same-origin.
+
+### D02 — Database and hackathon hosting
+- Date: 4 November 2026
+- Owner/approval: Builder
+- Final decision: Neon Postgres with Drizzle ORM and committed SQL migrations; Vercel Hobby for the noncommercial hackathon deployment.
+- Alternatives considered: Supabase; local SQLite; a self-hosted database; paid Vercel production hosting.
+- Evidence/source: Neon and Drizzle official documentation; Vercel Hobby plan terms; builder approval in the project session.
+- Documents changed: `SPEC.md`, `ARCHITECTURE.md`, `DECISIONS.md`, `.env.example`.
+- Implementation acceptance test: A migrated database survives app restart; migrations apply from a clean database; deployment reads secrets server-side; commercial use is not placed on Vercel Hobby.
 
 ## How to record a decision
 

@@ -5,8 +5,8 @@ As of 4 November 2026. NEAR Hackathon deadline: **14 November 2026, 23:59 UTC**.
 ## Phase 0 — unblock the specification (4 November)
 
 - [x] Approve `DESIGN.md` v5 replacement sections 10–20 (builder approval, 4 November 2026). They are replacements, not recovered original text.
-- [ ] Decide login/session method and sign-in screen/route; record in `SPEC.md` and `ARCHITECTURE.md`.
-- [ ] Decide durable database and hosting; choose free-tier if practical; write migrations and env vars.
+- [x] Decide login/session method and sign-in screen/route; Neon Managed Better Auth with Google/GitHub at `/sign-in`, approved and recorded 4 November 2026.
+- [x] Decide durable database and hosting; Neon Postgres + Drizzle migrations and Vercel Hobby for the non-commercial hackathon demo, with env contract and initial migration recorded 4 November 2026.
 - [x] Retrieve and read organizer's **original** https://nearhackathon.com/HACKATHON.md (verified 4 November 2026; re-read before submission because rules may change).
 - [ ] Get partner JWT (securely, outside repo). Verify destination USDC asset and `EXACT_OUTPUT` through small/dry provider requests.
 - [ ] Capture redacted examples of status response fields. Reconcile `INTEGRATIONS.md` V01–V06.

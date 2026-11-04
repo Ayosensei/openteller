@@ -18,7 +18,7 @@ Audience: independent designers, developers, writers and community managers work
 - **Client (unauthenticated):** visits a sufficiently unguessable public invoice link, sees the bill, chooses a supported origin asset, receives a live quote, pays, and sees accurate progress/confirmation.
 - No admin dashboard, business/team accounts, email automation, or additional account types.
 
-**OPEN / launch blocker:** The exact freelancer authentication solution and sign-in page are not yet designed; do not assume a connected wallet alone is a sufficient server-side session. Select and document a concrete secure account ownership/session approach before production data is accessible.
+**DECIDED 4 November 2026:** Freelancer identity uses Neon Managed Better Auth with Google and GitHub providers at `/sign-in`. Neon manages HTTP-only sessions; every private server query and mutation is scoped to the authenticated Neon subject. A connected wallet or receiving NEAR account is never treated as authentication. Provider configuration and production redirect origins must pass the auth deployment checklist before real data is accessible.
 
 ## 3. Routes and page purpose
 
@@ -31,7 +31,7 @@ Audience: independent designers, developers, writers and community managers work
 | `/i/[slug]` | Public invoice/payment flow; no client login | `DESIGN.md` |
 | `/invoices/[id]/receipt` | Printable evidence-based receipt | `DESIGN.md` |
 | `/exports` | Private CSV export | `DESIGN.md` |
-| Sign in | **OPEN**: route and UI still require a decision | `DESIGN.md` |
+| `/sign-in` | Freelancer sign-in with Google or GitHub through Neon Managed Better Auth | `DESIGN.md` |
 | Error/404 | Honest, actionable error and missing-invoice states | `DESIGN.md` |
 
 No extra navigational destinations unless approved. Freelancer top bar contains **Invoices** and **Exports** only.
@@ -112,8 +112,8 @@ Ideal: 3–5 real web3 freelancers use the product; at least one deliberately sm
 
 ## 10. Open decisions to resolve before live release
 
-1. Authentication/session method and sign-in design.
-2. Durable low-cost database provider, schema migrations, backups and deployment configuration.
+1. Authentication/session method and sign-in design: **DECIDED** — Neon Managed Better Auth, Google/GitHub, `/sign-in`; implementation and provider configuration remain to be verified.
+2. Durable low-cost database provider and hackathon hosting: **DECIDED** — Neon Postgres with Drizzle SQL migrations and Vercel Hobby for the noncommercial hackathon deployment. Backup/restore verification and commercial production hosting remain open before launch.
 3. Correct USDC-on-NEAR destination asset, account requirements, and receipt verification source.
 4. Quote refund address collection and cross-chain validation; prevent payer funds being refunded to the wrong account.
 5. Invoice value bounds and currency/quantity precision.

@@ -7,7 +7,7 @@ Status: proposed implementation blueprint, 4 November 2026. Requirements grounde
 - Next.js App Router, TypeScript strict, Tailwind CSS; install `motion`, run `npx motion-ai`, install `react-aria-components` per `DESIGN.md`. No generic icon library. Self-host approved fonts.
 - React Server Components for data-heavy/read-mostly pages; minimal client components for accessible forms, token selection, motion and quote/payment state.
 - Route Handlers or Server Actions for authorized mutations; never put JWTs or relayer private keys in the browser.
-- **OPEN:** database and auth provider. A relational durable store with migrations and transactions is strongly recommended; local-only SQLite or in-memory data must never be presented as a multi-user hosted production storage solution. Favor a free-tier persistent relational DB compatible with chosen hosting, after builder approval.
+- **DECIDED 4 November 2026:** Neon Postgres is the durable relational store, accessed server-side with Drizzle ORM and versioned generated SQL migrations. Neon Managed Better Auth supplies Google/GitHub identity and HTTP-only sessions through `/sign-in`. Vercel hosts the noncommercial hackathon deployment. Local-only SQLite, browser storage and in-memory repositories are never presented as hosted persistence.
 - `paymentProvider` interface allows fixtures in development and live 1Click calls after integration checks; payment records persist regardless of browser refresh.
 
 ## 2. High-level data flow
@@ -34,7 +34,7 @@ flowchart TD
 
 The relayer is **separate** from source-chain deposits and must never be implied to pay the client's origin-chain gas.
 
-## 3. Data model (proposed; implement only after auth/storage approval)
+## 3. Data model (approved baseline; evolve through reviewed migrations)
 
 ### User/Account
 `id`, `auth_subject`, `near_account_id`, `created_at`. Unique index on `auth_subject`. If wallet auth chosen, verify possession securely using a nonce/signature and a server session.
@@ -149,7 +149,7 @@ tests/
 
 ## 9. Deployment architecture and limitations
 
-A serverless host needs a durable external database. Any background status reconciliation requires a **real reliable trigger** (request-driven polling, explicitly scheduled job, or trusted webhook after verification), not an assumed always-running Node timer. **OPEN:** hosting and scheduler choice. Never promise 'automatic settlement updates' without a verified functioning update mechanism.
+The hackathon deployment uses Vercel with Neon Postgres. Vercel Hobby is restricted to personal/noncommercial use, so commercial production hosting requires a later builder decision. Payment reconciliation starts request-driven: a client or freelancer status request may trigger a bounded server-side provider refresh and durable update. A scheduled job may be added only after provider limits and the deployed trigger are verified; never assume an always-running Node timer or promise automatic updates without evidence.
 
 ## 10. Testing strategy
 
