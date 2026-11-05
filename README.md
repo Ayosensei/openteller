@@ -2,7 +2,7 @@
 
 **Invoice in USDC. Get paid from supported crypto networks. Keep the proof.**
 
-> **Project status:** implementation starter. This repository documentation describes a product being built for NEAR Hackathon 2026. It does **not** assert that live payments, wallet authentication, production persistence, or a gas relayer are already operational.
+> **Project status:** Phase 2 in progress. Neon authentication and durable invoice persistence are implemented locally. Live payments, verified settlement evidence, CSV export and a gas relayer are not operational.
 
 ## What Openteller is
 
@@ -67,7 +67,7 @@ Invoices are denominated in USDC. The payment CSV is one row per actual payment 
 - Supported tokens/routes depend on the live 1Click response.
 - Fee quotes, refund behavior, precise status fields and transaction links require integration verification; see `INTEGRATIONS.md`.
 - A NEAR relayer, if built, sponsors **specific NEAR actions only**, not any source-chain token transfer fee.
-- The approved auth and database architecture still must be implemented and deployed before real multi-user use.
+- Auth and database persistence are implemented locally but still require deployment and cross-account authorization verification before real multi-user use.
 
 ## Read the project docs
 
@@ -88,6 +88,8 @@ NEAR Hackathon 2026, track **08 Real-World Money (`realworld`)**. Organizer deta
 ## Current verification state
 
 - Product goals and design requirements: documented.
+- Neon Google/GitHub authentication and database migrations: implemented locally.
+- Authenticated invoice creation, private owner-scoped reads and public share pages: implemented; first complete browser-created invoice verification is pending.
 - 1Click endpoints and high-level provider statuses: confirmed in official documentation, as of 4 November 2026.
 - Actual 1Click quote and status JSON for Openteller's intended USDC receiving route: **not yet tested in this pack**.
 - Real invoice settlement and real-user adoption: **not established**.

@@ -25,7 +25,7 @@ Status: 4 November 2026. This document distinguishes founder-approved scope from
 | D03 | Replacement `DESIGN.md` sections 10–20 | Use the v5 replacements while preserving their `OPEN`/`VERIFY` gates | Builder | DECIDED 4 Nov 2026 |
 | D04 | Receiving asset/account structure | Live token list verifies the NEAR USDC asset and 6 decimals; verify recipient type, receiving-account requirements and exact destination semantics with a builder-controlled dry quote | Builder + agent | PARTIAL / VERIFY |
 | D05 | Refund address UX | Make payer provide network-valid, payer-controlled refund address | Builder + agent | OPEN |
-| D06 | Quantity precision and monetary bounds | Adopt documented integer/fixed-decimal scheme with tests | Builder | OPEN |
+| D06 | Quantity precision and monetary bounds | Quantities allow up to 3 decimal places; unit prices and invoice totals are capped at 1,000,000 USDC | Builder | DECIDED 5 Nov 2026 |
 | D07 | Failed/multiple/partial payments | Keep attempts separate; define recovery and aggregate amount rules | Builder + agent | OPEN |
 | D08 | Need for custom NEAR contract/relayer | Only build if a real allowlisted contract call exists; otherwise remove gasless claim | Builder | OPEN |
 | D09 | Quote polling/background tasks | Use a reliable server or scheduled mechanism matched to deployed host | Builder + agent | OPEN |
@@ -61,6 +61,15 @@ The organizer's `HACKATHON.md` says unauthenticated 1Click swaps cost 0.2%, whil
 - Evidence/source: Neon and Drizzle official documentation; Vercel Hobby plan terms; builder approval in the project session.
 - Documents changed: `SPEC.md`, `ARCHITECTURE.md`, `DECISIONS.md`, `.env.example`.
 - Implementation acceptance test: A migrated database survives app restart; migrations apply from a clean database; deployment reads secrets server-side; commercial use is not placed on Vercel Hobby.
+
+### D06 — Quantity precision and monetary bounds
+- Date: 5 November 2026
+- Owner/approval: Builder
+- Final decision: Quantities allow at most three decimal places. Unit prices and invoice totals are capped at 1,000,000 USDC. Calculations use integer minor units; combinations that produce fractional cents are rejected rather than silently rounded.
+- Alternatives considered: Whole-number quantities only; unrestricted decimal quantities; implicit floating-point rounding.
+- Evidence/source: Builder approval in the project session.
+- Documents changed: `SPEC.md`, `ARCHITECTURE.md`, `DECISIONS.md`.
+- Implementation acceptance test: Server validation rejects excess precision, non-positive values, fractional-cent line totals and values above the cap; deterministic unit tests cover the limits.
 
 ## How to record a decision
 

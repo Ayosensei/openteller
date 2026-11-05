@@ -40,7 +40,7 @@ No extra navigational destinations unless approved. Freelancer top bar contains 
 
 ### A. Create invoice
 1. Authenticated freelancer enters client name/identifier, an issue date, a due date, one to twenty items, optional note (maximum 500 characters), and a verified NEAR USDC receiving destination.
-2. Each item has a description, quantity, and unit price. Calculate money in **integer minor units**; never sum floats. Require nonempty descriptions, nonnegative meaningful quantities, and positive total. **OPEN:** permitted quantity precision and maximum monetary values must be settled before implementation.
+2. Each item has a description, quantity, and unit price. Calculate money in **integer minor units**; never sum floats. Require nonempty descriptions, quantities greater than zero with at most three decimal places, and a positive total. Unit prices and invoice totals cannot exceed 1,000,000 USDC. **DECIDED 5 November 2026.**
 3. Store an immutable invoice number (unique for its owner), durable internal ID and high-entropy share slug. Give a copyable public URL.
 4. A reload keeps the invoice; a failure never fabricates success.
 5. Due dates are for billing, not proof of payment. Overdue is a computed indicator, not a payment status.
@@ -116,7 +116,7 @@ Ideal: 3–5 real web3 freelancers use the product; at least one deliberately sm
 2. Durable low-cost database provider and hackathon hosting: **DECIDED** — Neon Postgres with Drizzle SQL migrations and Vercel Hobby for the noncommercial hackathon deployment. Backup/restore verification and commercial production hosting remain open before launch.
 3. Correct USDC-on-NEAR destination asset, account requirements, and receipt verification source.
 4. Quote refund address collection and cross-chain validation; prevent payer funds being refunded to the wrong account.
-5. Invoice value bounds and currency/quantity precision.
+5. Invoice value bounds and currency/quantity precision: **DECIDED** — quantities allow at most three decimal places; unit prices and invoice totals are capped at 1,000,000 USDC.
 6. Multi-attempt/partial payment handling and `FAILED` transition behavior.
 7. Relayer's legitimate app-specific contract/action, required deployment, and whether it adds any value to the base invoicing flow.
 8. `DESIGN.md` v5 replacement sections 10–20 were approved by the builder on 4 November 2026. Their remaining `OPEN` and `VERIFY` items still require the decisions or evidence named there.

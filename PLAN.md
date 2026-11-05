@@ -25,7 +25,7 @@ As of 4 November 2026. NEAR Hackathon deadline: **14 November 2026, 23:59 UTC**.
 
 ## Phase 2 — invoices and persistence (5–7 November)
 
-- [ ] Implement sign-in/ownership and authorization (following approved decision).
+- [x] Implement sign-in/ownership and authorization (following approved decision).
 - [ ] Create invoice form with 1–20 items, integer money calculations, dates, notes and errors.
 - [ ] Persist records, create secure public slug, copy share URL.
 - [ ] Invoice list filters and details. Protect private routes; expose minimal safe public invoice.

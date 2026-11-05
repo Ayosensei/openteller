@@ -1,6 +1,7 @@
 const requiredServerVariables = [
   "DATABASE_URL",
   "NEON_AUTH_BASE_URL",
+  "NEON_AUTH_COOKIE_SECRET",
   "ONECLICK_API_BASE_URL",
 ] as const;
 

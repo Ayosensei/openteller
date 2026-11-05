@@ -12,5 +12,6 @@ export interface InvoiceListItem {
 
 export interface InvoiceRepository {
   findOwnedById(ownerId: string, invoiceId: string): Promise<Invoice | null>;
+  findPublicBySlug(publicSlug: string): Promise<Invoice | null>;
   listOwned(ownerId: string): Promise<readonly InvoiceListItem[]>;
 }

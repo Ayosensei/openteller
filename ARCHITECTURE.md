@@ -43,7 +43,7 @@ The relayer is **separate** from source-chain deposits and must never be implied
 `id` (UUID/ULID), `owner_id`, `public_slug` (unguessable random; unique), `invoice_number` (owner-scoped unique), `client_name`, `issued_at`, `due_at`, `notes`, `currency='USDC'`, `total_minor` (integer or numeric string), `recipient_near_account`, `status`, `created_at`, `updated_at`, `voided_at?`. Amount fields never floats. **OPEN:** precision/bounds.
 
 ### InvoiceItem
-`id`, `invoice_id`, `position`, `description`, `quantity_scaled`, `unit_price_minor`, `line_total_minor`. Choose explicit decimal quantity scale once verified. Enforce ordered, contiguous line items and server-side recalculation.
+`id`, `invoice_id`, `position`, `description`, `quantity_scaled`, `unit_price_minor`, `line_total_minor`. Quantities use an integer value plus scale with at most three decimal places. Unit prices and invoice totals are capped at 1,000,000 USDC. Enforce ordered, contiguous line items and server-side recalculation.
 
 ### PaymentAttempt
 `id`, `invoice_id`, `provider='1click'`, `mode='fixture'|'live'`, `provider_status`, `ui_status`, `deposit_address`, `origin_asset_id`, `destination_asset_id`, `origin_chain`, `quoted_origin_base_units?`, `requested_destination_base_units`, `refund_destination`, `quoted_at`, `expires_at`, `confirmed_at?`, `received_destination_base_units?`, `raw_provider_response_ref?`. One invoice can have multiple attempts, but do **not** aggregate them into Paid without confirmed reconciliation rules.

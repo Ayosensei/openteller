@@ -57,6 +57,7 @@ export const invoices = pgTable(
       .notNull()
       .references(() => accounts.id, { onDelete: "restrict" }),
     publicSlug: text("public_slug").notNull(),
+    submissionKey: uuid("submission_key").notNull(),
     invoiceNumber: text("invoice_number").notNull(),
     clientName: text("client_name").notNull(),
     issuedAt: date("issued_at", { mode: "string" }).notNull(),
@@ -74,6 +75,10 @@ export const invoices = pgTable(
     uniqueIndex("invoices_owner_number_uidx").on(
       table.ownerId,
       table.invoiceNumber,
+    ),
+    uniqueIndex("invoices_owner_submission_uidx").on(
+      table.ownerId,
+      table.submissionKey,
     ),
     index("invoices_owner_created_idx").on(table.ownerId, table.createdAt),
   ],
